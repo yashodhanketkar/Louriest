@@ -15,9 +15,7 @@ limitations under the License.
 """
 
 
-import discord
 import os
-import json
 import asyncio
 import logging
 from discord.ext import commands
