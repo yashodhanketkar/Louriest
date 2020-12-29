@@ -16,6 +16,7 @@ limitations under the License.
 
 
 import discord
+import os
 import json
 import asyncio
 import logging
@@ -27,18 +28,7 @@ from discord.ext import commands
 ########################################################################################################################
 
 
-def get_token():
-    """
-    Get discord bot token from token.txt
-    :return: token
-    """
-    with open(".data/config.json", "r") as f:
-        config = json.load(f)
-    return config['token']
-
-
-# get token
-TOKEN = get_token()
+TOKEN = os.environ['Louriest_Token']
 # make bot respond to command with ! prefix
 # example: !foo
 bot = commands.Bot(command_prefix="!")
