@@ -16,6 +16,7 @@ limitations under the License.
 
 
 import discord
+import json
 import asyncio
 import logging
 from discord.ext import commands
@@ -31,9 +32,9 @@ def get_token():
     Get discord bot token from token.txt
     :return: token
     """
-    with open(".data/token.txt", "r") as f:
-        lines = f.readlines()
-    return lines[0].strip()
+    with open(".data/config.json", "r") as f:
+        config = json.load(f)
+    return config['token']
 
 
 # get token
