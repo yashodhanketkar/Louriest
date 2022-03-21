@@ -21,9 +21,9 @@ import logging
 from discord.ext import commands
 
 
-########################################################################################################################
+###############################################################################
 # Requirements Gathering
-########################################################################################################################
+###############################################################################
 
 
 TOKEN = os.environ['Louriest_Token']
@@ -32,9 +32,9 @@ TOKEN = os.environ['Louriest_Token']
 bot = commands.Bot(command_prefix="!")
 
 
-########################################################################################################################
+###############################################################################
 # Helper Functions
-########################################################################################################################
+###############################################################################
 
 
 def bad_word(*q):
@@ -98,21 +98,27 @@ async def test(c):
     await asyncio.sleep(30)
 
 
-########################################################################################################################
+###############################################################################
 # Logging
-########################################################################################################################
+###############################################################################
 
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s'))
+handler = logging.FileHandler(
+    filename='logs/discord.log',
+    encoding='utf-8',
+    mode='w'
+    )
+handler.setFormatter(logging.Formatter(
+    '%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s'
+    ))
 logger.addHandler(handler)
 
 
-########################################################################################################################
+###############################################################################
 # Bot events
-########################################################################################################################
+###############################################################################
 
 
 @bot.event
@@ -136,18 +142,20 @@ async def on_message(message):
     check, offence = bad_word(' ' + message.content)
     if check:
         if len(offence) > 1:
-            await message.author.send(f"Warning: Word/s {offence} is/are banned from chat\n"
+            await message.author.send(f"Warning: Word/s {offence} is/are"
+                                      " banned from chat\n",
                                       f"Original message: {message.content}")
         else:
-            await message.author.send(f"Warning: Word {offence} is banned from chat\n"
+            await message.author.send(f"Warning: Word {offence} is banned"
+                                      " from chat\n"
                                       f"Original message: {message.content}")
         await message.delete()
     await bot.process_commands(message)
 
 
-########################################################################################################################
+###############################################################################
 # Bot commands
-########################################################################################################################
+###############################################################################
 
 
 @bot.command(name='hello')
@@ -170,7 +178,7 @@ async def ping(ctx):
     if bot.latency > 1:
         await ctx.send(f"Ping to server is {int(bot.latency)}ms")
     else:
-        await ctx.send(f"Ping to server is 1ms")
+        await ctx.send("Ping to server is 1ms")
 
 
 @bot.command(name='clear')
@@ -205,7 +213,8 @@ async def clear(ctx, amt=None):
 @bot.command(name='search')
 async def search(ctx, *q):
     """
-    Get query for google search from user and sends google search result to respective discord channel
+    Get query for google search from user and sends google search result to
+    respective discord channel
     :param ctx: context
     :param q: String argument/Tuple of arguments
     :return: None
@@ -239,26 +248,26 @@ async def ban_word(ctx, *arg):
         await ctx.send(f"Hello, the phrase: '{phrase}' is banned from chat")
 
 
-########################################################################################################################
+###############################################################################
 # Local Machine Execution Special Functions
-########################################################################################################################
+###############################################################################
 
 
-# @bot.command(name='shutdown')
-# async def shutdown(ctx):
-#     """
-#     Terminate bot process and logout from server
-#     :param ctx: context
-#     :return: None
-#     """
-#     if ctx.author.guild_permissions.administrator:
-#         await ctx.send("Goodbye")
-#         await ctx.bot.close()
+@bot.command(name='shutdown')
+async def shutdown(ctx):
+    """
+    Terminate bot process and logout from server
+    :param ctx: context
+    :return: None
+    """
+    if ctx.author.guild_permissions.administrator:
+        await ctx.send("Goodbye")
+        await ctx.bot.close()
 
 
-########################################################################################################################
+###############################################################################
 # Execution
-########################################################################################################################
+###############################################################################
 
 
 # runs the bot
