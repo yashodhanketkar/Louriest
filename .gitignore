@@ -3,4 +3,5 @@ test.py
 .idea
 venv
 .vscode
+.google-cookie
 logs
