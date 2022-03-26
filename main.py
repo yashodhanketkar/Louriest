@@ -26,7 +26,7 @@ from discord.ext import commands
 ###############################################################################
 
 
-TOKEN = os.environ['Louriest_Token']
+TOKEN = os.environ["Louriest_Token"]
 # make bot respond to command with ! prefix
 # example: !foo
 bot = commands.Bot(command_prefix="!")
@@ -43,14 +43,14 @@ def bad_word(*q):
     :param q: String argument/tuple of arguments
     :return: Boolean
     """
-    res = ''
+    res = ""
     offence = []
     with open(".data/block_words.txt") as f:
         b = f.readlines()
     for item in q:
-        res += item + ' '
+        res += item + " "
     for item in b:
-        item_rep = ' ' + item.replace('\n', '')
+        item_rep = " " + item.replace("\n", "")
         if item_rep in res:
             offence.append(item_rep)
             print(item_rep)
@@ -69,7 +69,7 @@ def add_bad_words(q):
         return None
     with open(".data/block_words.txt", "a") as f:
         print(q)
-        f.write(q+'\n')
+        f.write(q + "\n")
 
 
 def google_search(*q):
@@ -78,23 +78,24 @@ def google_search(*q):
     :param q: String argument/Tuple of arguments
     :return: generator/string
     """
-    res = ''
+    res = ""
     from googlesearch import search
-    query = ''
+
+    query = ""
     for word in q:
-        query += word + ' '
-    word = ' ' + query
+        query += word + " "
+    word = " " + query
     check, offence = bad_word(word)
     if check:
         return None
     else:
-        for item in search(query, tld='com', start=1, stop=1):
+        for item in search(query, tld="com", start=1, stop=1):
             res = item
         return res
 
 
 async def test(c):
-    print(f'hello x {c}')
+    print(f"hello x {c}")
     await asyncio.sleep(30)
 
 
@@ -103,16 +104,14 @@ async def test(c):
 ###############################################################################
 
 
-logger = logging.getLogger('discord')
+logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(
-    filename='logs/discord.log',
-    encoding='utf-8',
-    mode='w'
+handler = logging.FileHandler(filename="logs/discord.log", encoding="utf-8", mode="w")
+handler.setFormatter(
+    logging.Formatter(
+        "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s"
     )
-handler.setFormatter(logging.Formatter(
-    '%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s'
-    ))
+)
 logger.addHandler(handler)
 
 
@@ -139,16 +138,19 @@ async def on_message(message):
     """
     if message.author == bot.user:
         pass
-    check, offence = bad_word(' ' + message.content)
+    check, offence = bad_word(" " + message.content)
     if check:
         if len(offence) > 1:
-            await message.author.send(f"Warning: Word/s {offence} is/are"
-                                      " banned from chat\n",
-                                      f"Original message: {message.content}")
+            await message.author.send(
+                f"Warning: Word/s {offence} is/are" " banned from chat\n",
+                f"Original message: {message.content}",
+            )
         else:
-            await message.author.send(f"Warning: Word {offence} is banned"
-                                      " from chat\n"
-                                      f"Original message: {message.content}")
+            await message.author.send(
+                f"Warning: Word {offence} is banned"
+                " from chat\n"
+                f"Original message: {message.content}"
+            )
         await message.delete()
     await bot.process_commands(message)
 
@@ -158,7 +160,7 @@ async def on_message(message):
 ###############################################################################
 
 
-@bot.command(name='hello')
+@bot.command(name="hello")
 async def greet(ctx):
     """
     Greets user with name
@@ -181,7 +183,7 @@ async def ping(ctx):
         await ctx.send("Ping to server is 1ms")
 
 
-@bot.command(name='clear')
+@bot.command(name="clear")
 async def clear(ctx, amt=None):
     """
     Clear the messages from current channel if user have special permissions
@@ -210,7 +212,7 @@ async def clear(ctx, amt=None):
         await ctx.channel.purge(limit=3)
 
 
-@bot.command(name='search')
+@bot.command(name="search")
 async def search(ctx, *q):
     """
     Get query for google search from user and sends google search result to
@@ -218,13 +220,13 @@ async def search(ctx, *q):
     :param ctx: context
     :param q: String argument/Tuple of arguments
     :return: None
-    # """
+    #"""
     res = google_search(*q)
     if res:
         await ctx.send(res)
 
 
-@bot.command(name='ban_word')
+@bot.command(name="ban_word")
 async def ban_word(ctx, *arg):
     """
     Add words/phrase to server block list
@@ -241,9 +243,9 @@ async def ban_word(ctx, *arg):
         add_bad_words(word)
         await ctx.send(f"Hello, the word: '{word}' is banned from chat")
     else:
-        phrase = ''
+        phrase = ""
         for item in arg:
-            phrase += item + ' '
+            phrase += item + " "
         add_bad_words(phrase)
         await ctx.send(f"Hello, the phrase: '{phrase}' is banned from chat")
 
@@ -253,7 +255,7 @@ async def ban_word(ctx, *arg):
 ###############################################################################
 
 
-@bot.command(name='shutdown')
+@bot.command(name="shutdown")
 async def shutdown(ctx):
     """
     Terminate bot process and logout from server
