@@ -15,11 +15,11 @@ limitations under the License.
 """
 
 
-import os
 import asyncio
 import logging
-from discord.ext import commands
+import os
 
+from discord.ext import commands
 
 ###############################################################################
 # Requirements Gathering
