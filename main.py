@@ -106,7 +106,10 @@ async def test(c):
 
 logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename="logs/discord.log", encoding="utf-8", mode="w")
+handler = logging.FileHandler(
+    filename="logs/discord.log",
+    encoding="utf-8", mode="w"
+)
 handler.setFormatter(
     logging.Formatter(
         "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s"
