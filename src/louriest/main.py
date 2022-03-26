@@ -16,7 +16,7 @@ limitations under the License.
 
 
 import asyncio
-import logging
+# import logging
 import os
 
 from discord.ext import commands
@@ -104,18 +104,18 @@ async def test(c):
 ###############################################################################
 
 
-logger = logging.getLogger("discord")
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(
-    filename="logs/discord.log",
-    encoding="utf-8", mode="w"
-)
-handler.setFormatter(
-    logging.Formatter(
-        "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s"
-    )
-)
-logger.addHandler(handler)
+# logger = logging.getLogger("discord")
+# logger.setLevel(logging.DEBUG)
+# handler = logging.FileHandler(
+#     filename="logs/discord.log",
+#     encoding="utf-8", mode="w"
+# )
+# handler.setFormatter(
+#     logging.Formatter(
+#         "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s"
+#     )
+# )
+# logger.addHandler(handler)
 
 
 ###############################################################################
