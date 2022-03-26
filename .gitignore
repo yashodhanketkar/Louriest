@@ -5,3 +5,4 @@ venv
 .vscode
 .google-cookie
 logs
+__pycache__/
