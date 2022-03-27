@@ -4,6 +4,5 @@ test.py
 .env
 .vscode
 .google-cookie
-logs
-__pycache__/
 *.log
+__pycache__/

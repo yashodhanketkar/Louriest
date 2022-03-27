@@ -1,126 +1,33 @@
 """
-Copyright [2020] [Yashodhan Ketkar]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+name :: louriest discord bot
+version :: 2.0.1
+description :: main module of discord bot
+development python version :: 3.10.1
 """
 
 
-import asyncio
-# import logging
+import logging
 import os
 
 from discord.ext import commands
-
-###############################################################################
-# Requirements Gathering
-###############################################################################
-
+from helper import add_bad_words, bad_word, google_search
 
 TOKEN = os.environ["Louriest_Token"]
-# make bot respond to command with ! prefix
-# example: !foo
 bot = commands.Bot(command_prefix="!")
 
 
-###############################################################################
-# Helper Functions
-###############################################################################
-
-
-def bad_word(*q):
-    """
-    Check if bad word/s is/are present in user query
-    :param q: String argument/tuple of arguments
-    :return: Boolean
-    """
-    res = ""
-    offence = []
-    with open(".data/block_words.txt") as f:
-        b = f.readlines()
-    for item in q:
-        res += item + " "
-    for item in b:
-        item_rep = " " + item.replace("\n", "")
-        if item_rep in res:
-            offence.append(item_rep)
-            print(item_rep)
-    if len(offence) == 0:
-        return False, offence
-    return True, offence
-
-
-def add_bad_words(q):
-    """
-    Write bad words to block words file
-    :param q: String argument/Tuple of arguments
-    :return: None
-    """
-    if bad_word(q):
-        return None
-    with open(".data/block_words.txt", "a") as f:
-        print(q)
-        f.write(q + "\n")
-
-
-def google_search(*q):
-    """
-    Search google for query with 'googlesearch' module
-    :param q: String argument/Tuple of arguments
-    :return: generator/string
-    """
-    res = ""
-    from googlesearch import search
-
-    query = ""
-    for word in q:
-        query += word + " "
-    word = " " + query
-    check, offence = bad_word(word)
-    if check:
-        return None
-    else:
-        for item in search(query, tld="com", start=1, stop=1):
-            res = item
-        return res
-
-
-async def test(c):
-    print(f"hello x {c}")
-    await asyncio.sleep(30)
-
-
-###############################################################################
-# Logging
-###############################################################################
-
-
-# logger = logging.getLogger("discord")
-# logger.setLevel(logging.DEBUG)
-# handler = logging.FileHandler(
-#     filename="logs/discord.log",
-#     encoding="utf-8", mode="w"
-# )
-# handler.setFormatter(
-#     logging.Formatter(
-#         "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s"
-#     )
-# )
-# logger.addHandler(handler)
-
-
-###############################################################################
-# Bot events
-###############################################################################
+logger = logging.getLogger("discord")
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(
+    filename="discord.log",
+    encoding="utf-8", mode="w"
+)
+handler.setFormatter(
+    logging.Formatter(
+        "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s"
+    )
+)
+logger.addHandler(handler)
 
 
 @bot.event
@@ -143,24 +50,19 @@ async def on_message(message):
         pass
     check, offence = bad_word(" " + message.content)
     if check:
-        if len(offence) > 1:
-            await message.author.send(
-                f"Warning: Word/s {offence} is/are" " banned from chat\n",
-                f"Original message: {message.content}",
-            )
-        else:
-            await message.author.send(
-                f"Warning: Word {offence} is banned"
-                " from chat\n"
-                f"Original message: {message.content}"
+        await message.author.send(
+            f"Inappropriate terms in message: {message.content}",
             )
         await message.delete()
     await bot.process_commands(message)
 
 
-###############################################################################
-# Bot commands
-###############################################################################
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send(f"Sorry {ctx.author.name}, this command is not valid!")
+        return
+    raise error
 
 
 @bot.command(name="hello")
@@ -253,11 +155,6 @@ async def ban_word(ctx, *arg):
         await ctx.send(f"Hello, the phrase: '{phrase}' is banned from chat")
 
 
-###############################################################################
-# Local Machine Execution Special Functions
-###############################################################################
-
-
 @bot.command(name="shutdown")
 async def shutdown(ctx):
     """
@@ -270,10 +167,4 @@ async def shutdown(ctx):
         await ctx.bot.close()
 
 
-###############################################################################
-# Execution
-###############################################################################
-
-
-# runs the bot
 bot.run(TOKEN)
