@@ -9,18 +9,21 @@ development python version :: 3.10.1
 import logging
 import os
 
+from discord import Embed
 from discord.ext import commands
 from helper import add_bad_words, bad_word, google_search
 
 TOKEN = os.environ["Louriest_Token"]
 bot = commands.Bot(command_prefix="!")
+bot.remove_command('help')
 
 
 logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(
     filename="discord.log",
-    encoding="utf-8", mode="w"
+    encoding="utf-8",
+    mode="w"
 )
 handler.setFormatter(
     logging.Formatter(
@@ -52,7 +55,7 @@ async def on_message(message):
     if check:
         await message.author.send(
             f"Inappropriate terms in message: {message.content}",
-            )
+        )
         await message.delete()
     await bot.process_commands(message)
 
@@ -65,6 +68,20 @@ async def on_command_error(ctx, error):
     raise error
 
 
+@bot.command(name="help")
+async def help(ctx):
+    """
+    Show commands to users
+    :param ctx: Context
+    :return: None
+    """
+    embed = Embed(
+        title="title"
+    )
+    embed.set_author(name=bot.user.name)
+    return await ctx.send(embed=embed)
+
+
 @bot.command(name="hello")
 async def greet(ctx):
     """
@@ -73,6 +90,29 @@ async def greet(ctx):
     :return: None
     """
     await ctx.send(f"Hello {ctx.author.name}, I'm {bot.user.name}")
+
+
+@bot.command(name="nqn")
+async def help_nqn(ctx):
+    """
+    Shows nqn tag
+    :param ctx: Context
+    :return: None
+    """
+    await ctx.send("Please use '-n help' to call nqn bot")
+
+
+@bot.command(name="louriest")
+async def lou_hello(ctx):
+    """
+    Say custom hello with help of nqn bot
+    :param ctx: Context
+    :return: None
+    """
+    await ctx.channel.purge(limit=1)
+    await ctx.send(
+        "https://cdn.discordapp.com/emojis/758007359531515945.gif"
+    )
 
 
 @bot.command(name="ping")

@@ -59,6 +59,6 @@ def google_search(*q):
     if check:
         return None
     else:
-        for item in search(query, tld="com", start=1, stop=1):
-            res = item
+        for item in search(query, tld="com", start=1, stop=3):
+            res += item
         return res

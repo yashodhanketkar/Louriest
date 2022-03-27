@@ -21,7 +21,7 @@ setup(
         "License :: OSI Approved :: Apache 2.0 License",
         "Operating System :: Windows NT system"
     ],
-    keywords="development",
+    keywords="louriest",
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     python_requires=">=3.10",
