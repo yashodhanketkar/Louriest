@@ -8,7 +8,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="louriest_discord",
-    version="2.0.0",
+    version="2.1.0",
     description="A personal discord bot",
     long_description=long_description,
     long_description_conten_type="text/markdown",
