@@ -26,10 +26,7 @@ class LouriestCog(commands.Cog):
         """Sends preselected gif as message
 
         Args:
-            ctx: Context
-
-        return:
-            None
+            ctx (context): Context from message
         """
         await ctx.channel.purge(limit=1)
         await ctx.send("https://cdn.discordapp.com/emojis/758007359531515945.gif")
@@ -41,4 +38,4 @@ def setup(bot):
 
 
 if __name__ == "__main__":
-    pass
+    ...

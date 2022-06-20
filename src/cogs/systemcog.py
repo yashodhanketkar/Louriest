@@ -4,7 +4,6 @@ description: Contains system commands for local server runtime
 python version: 3.10.1
 """
 
-
 import os
 import sys
 
@@ -37,7 +36,7 @@ class SystemCog(commands.Cog):
         """Terminate bot process and logout from server
 
         Args:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         if ctx.author.guild_permissions.administrator:
             await ctx.send("Goodbye")
@@ -49,7 +48,7 @@ class SystemCog(commands.Cog):
         """Terminate current bot process and start new one
 
         Args:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         if ctx.author.guild_permissions.administrator:
             await os.execv(sys.executable, ["python"] + sys.argv)
@@ -59,7 +58,7 @@ class SystemCog(commands.Cog):
         """Load user specified extension/cog if present
 
         Arg:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         if not ctx.author.guild_permissions.administrator:
             return None
@@ -80,7 +79,7 @@ class SystemCog(commands.Cog):
         """Unload user specified extension/cog if present
 
         Arg:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         if not ctx.author.guild_permissions.administrator:
             return None
@@ -100,7 +99,7 @@ class SystemCog(commands.Cog):
         """Reload user specified extension/cog if present
 
         Arg:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         if not ctx.author.guild_permissions.administrator:
             return None
@@ -122,4 +121,4 @@ def setup(bot):
 
 
 if __name__ == "__main__":
-    pass
+    ...

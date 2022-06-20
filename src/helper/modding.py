@@ -9,10 +9,10 @@ def bad_word(*q):
     """Check if bad word/s is/are present in user query
 
     Args:
-        q: String argument/tuple of arguments
+        q (args): String argument/tuple of arguments
     return:
-        offence_present: Boolean value
-        offence: List of offensive words
+        offence_present (bool): If offensive word is present or not
+        offence (list): List of offensive words
     """
     res = ""
     offence_present = True
@@ -35,7 +35,10 @@ def add_bad_words(q):
     """Add words to block words file
 
     Args:
-        q: String argument/Tuple of arguments
+        q (args): String argument/Tuple of arguments
+
+    Returns:
+        none: If the bad word already present
     """
     if bad_word(q):
         return None
@@ -45,4 +48,4 @@ def add_bad_words(q):
 
 
 if __name__ == "__main__":
-    pass
+    ...

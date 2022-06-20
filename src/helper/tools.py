@@ -6,17 +6,19 @@ development python version: 3.10.1
 
 
 from googlesearch import search
-from helper.modding import bad_word
+
+from .modding import bad_word
 
 
 def google_search(*q):
     """Search google for query with 'googlesearch' module
 
     Args:
-        q: String argument/Tuple of arguments
+        q (args): String argument/Tuple of arguments
 
     return:
-        None if check is false else res string
+        None: If check is true
+        res (url): First result of query
     """
     res = ""
     query = ""
@@ -33,4 +35,4 @@ def google_search(*q):
 
 
 if __name__ == "__main__":
-    pass
+    ...

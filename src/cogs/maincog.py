@@ -6,8 +6,8 @@ python version: 3.10.1
 
 from discord import Embed
 from discord.ext import commands
-from helper.modding import add_bad_words, bad_word
-from helper.tools import google_search
+
+from helper import add_bad_words, bad_word, google_search
 
 
 class MainCog(commands.Cog):
@@ -53,19 +53,19 @@ class MainCog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        """Print message when bot is online"""
+        """Print messagge when bot is online"""
         print(f"We have logged in as {self.bot.user.name}")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        """Handles some errors
+        """Handles errors
 
         Args:
-            ctx: Context from command
-            error: Error collected by listner funciton
+            ctx (context): Context from command
+            error (error): Error collected from listener function
 
-        return:
-            None
+        Raises:
+            error: throws isinstance error if command is not avaliable
         """
         if isinstance(error, commands.CommandNotFound):
             await ctx.send(f"Sorry {ctx.author.name}, this command is not valid!")
@@ -75,14 +75,14 @@ class MainCog(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         """Screens messages. Does two things
-        1. Stops bot from replying to own commands
-        2. Filter blocked words and send warning to users
+            1. Stops bot from replying to own commands
+            2. Filter blocked words and send warning to users
 
         Args:
-            message: Input from discord channel
+            message (message): Input from discord channel
         """
         if message.author == self.bot.user:
-            pass
+            ...
         check, offence = bad_word(" " + message.content)
         if check:
             await message.author.send(
@@ -96,10 +96,10 @@ class MainCog(commands.Cog):
         """Show available commands to user
 
         Args:
-            ctx: Context from command
+            ctx (context): Context from command
 
         return:
-            embed: Custom embed
+            embed (Embed): Custom embed object
         """
         embed = Embed(title="title")
         embed.set_author(name=self.bot.user.name)
@@ -114,16 +114,16 @@ class MainCog(commands.Cog):
         """Greets users
 
         Args:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         await ctx.send(f"Hello {ctx.author.name}, I'm {self.bot.user.name}")
 
     @commands.command(name="nqn")
     async def help_nqn(self, ctx):
-        """Shows nqn tag
+        """Shows NQN tag
 
-        args
-            ctx: Context
+        Args:
+            ctx (context): Context from command
         """
         await ctx.send("Please use '-n help' to call nqn bot")
 
@@ -132,7 +132,7 @@ class MainCog(commands.Cog):
         """Send message to channel with current ping
 
         Args:
-            ctx: Context from command
+            ctx (context): Context from command
         """
         if self.bot.latency > 1:
             await ctx.send(f"Ping to server is {int(self.bot.latency)}ms")
@@ -145,8 +145,11 @@ class MainCog(commands.Cog):
         permissions
 
         Args:
-            ctx: Context from command
-            amt: Number of message to be deleted
+            ctx (context): Context from command
+            amt (int, optional): Number of message to be deleted. Defaults to None.
+
+        Returns:
+            None: If author doesn't have authorization
         """
         if not ctx.author.guild_permissions.administrator:
             return None
@@ -174,8 +177,8 @@ class MainCog(commands.Cog):
         result to respective discord channel
 
         Args:
-            ctx: Context from command
-            q: String argument/Tuple of arguments
+            ctx (context): Context from command
+            q (args): String argument/Tuple of arguments
         """
         res = google_search(*q)
         if res:
@@ -186,8 +189,8 @@ class MainCog(commands.Cog):
         """Add words/phrase to server block list
 
         Args:
-            ctx: Context from command
-            arg: String argument/Tuple of arguments
+            ctx (context): Context from command
+            arg (args): String argument/Tuple of arguments
         """
         if not ctx.author.guild_permissions.administrator:
             return None
@@ -211,4 +214,4 @@ def setup(bot):
 
 
 if __name__ == "__main__":
-    pass
+    ...
