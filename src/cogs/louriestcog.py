@@ -32,9 +32,9 @@ class LouriestCog(commands.Cog):
         await ctx.send("https://cdn.discordapp.com/emojis/758007359531515945.gif")
 
 
-def setup(bot):
+async def setup(bot):
     """Setting up louriestcog"""
-    bot.add_cog(LouriestCog(bot))
+    await bot.add_cog(LouriestCog(bot))
 
 
 if __name__ == "__main__":

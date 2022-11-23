@@ -65,7 +65,7 @@ class SystemCog(commands.Cog):
         cog_asked = ctx.message.content.replace("!load ", "")
         if cog_asked in self.available_cogs:
             try:
-                self.bot.load_extension(f"cogs.{cog_asked}cog")
+                await self.bot.load_extension(f"cogs.{cog_asked}cog")
                 await ctx.send(f"{cog_asked} extension successfully loaded")
             except commands.ExtensionAlreadyLoaded:
                 await ctx.send(
@@ -86,7 +86,7 @@ class SystemCog(commands.Cog):
         cog_asked = ctx.message.content.replace("!unload ", "")
         if cog_asked in self.available_cogs:
             try:
-                self.bot.unload_extension(f"cogs.{cog_asked}cog")
+                await self.bot.unload_extension(f"cogs.{cog_asked}cog")
                 await ctx.send(f"{cog_asked} extension successfully unloaded")
             except commands.ExtensionNotLoaded:
                 await ctx.send(
@@ -115,9 +115,9 @@ class SystemCog(commands.Cog):
                 )
 
 
-def setup(bot):
+async def setup(bot):
     """Setting up system cog"""
-    bot.add_cog(SystemCog(bot))
+    await bot.add_cog(SystemCog(bot))
 
 
 if __name__ == "__main__":

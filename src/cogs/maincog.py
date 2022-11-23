@@ -4,7 +4,8 @@ description: Contains general commands
 python version: 3.10.1
 """
 
-from discord import Embed
+from discord import Embed, app_commands
+import discord
 from discord.ext import commands
 
 from helper import add_bad_words, bad_word, google_search
@@ -208,9 +209,9 @@ class MainCog(commands.Cog):
             await ctx.send(f"Hello, the phrase: '{phrase}' is banned from chat")
 
 
-def setup(bot):
+async def setup(bot):
     """Setting up maincog"""
-    bot.add_cog(MainCog(bot))
+    await bot.add_cog(MainCog(bot))
 
 
 if __name__ == "__main__":
