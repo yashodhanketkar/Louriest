@@ -117,7 +117,7 @@ class SystemCog(commands.Cog):
 
 async def setup(bot):
     """Setting up system cog"""
-    await bot.add_cog(SystemCog(bot))
+    await bot.add_cog(SystemCog(bot), guilds=[discord.Object(id="522068967842512908")])
 
 
 if __name__ == "__main__":
