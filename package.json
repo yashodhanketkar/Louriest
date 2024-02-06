@@ -5,8 +5,15 @@
   "main": "index.js",
   "author": "Yashodhan Ketkar",
   "license": "MIT",
+  "scripts": {
+    "run": "node index.js",
+    "dev": "nodemon index.js",
+    "deploy": "node deploy-command.js"
+  },
   "dependencies": {
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.1"
+    ,
+    "nodemon": "^3.0.3"
   }
 }
