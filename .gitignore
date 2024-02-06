@@ -1,12 +1,3 @@
-.env/
-.vscode/
-__pycache__/
-
+node_modules/
+.env
 config.json
-test.py
-.idea
-.google-cookie
-*.log
-
-slcocog.py
-commands.py

@@ -1,0 +1,12 @@
+{
+  "name": "loubot",
+  "version": "1.0.0",
+  "description": "Discord bot for louriest server",
+  "main": "index.js",
+  "author": "Yashodhan Ketkar",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1"
+  }
+}
