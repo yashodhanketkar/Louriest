@@ -18,14 +18,14 @@ async function getMessages(channel, limit = 0) {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("mdev")
+    .setName("clear")
     .setDescription("Multi dev command for development/testing")
     .addStringOption((o) =>
-      o.setName("input").setDescription("The input value")
+      o.setName("limit").setDescription("Number of messages to delete.")
     ),
   async execute(interaction) {
     const channel = await interaction.channel;
-    const userLimit = interaction.options.getString("input") ?? NaN;
+    const userLimit = interaction.options.getString("limit") ?? NaN;
     let content = "";
 
     /*
@@ -45,6 +45,12 @@ module.exports = {
         content = `No message has been deleted.\n"${userLimit}" is invalid input`;
       }
     }
+
+    await interaction.deferReply({
+      ephemeral: true,
+    });
+
+    await require("node:timers/promises").setTimeout(200);
 
     await interaction.reply({
       content,
