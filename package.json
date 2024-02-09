@@ -8,11 +8,16 @@
   "scripts": {
     "run": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "deploy": "node src/deploy-commands.js"
+    "deploy": "node src/deploy-commands.js",
+    "doc": "jsdoc -c jsdoc.conf.json"
   },
   "dependencies": {
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.1",
     "nodemon": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "jsdoc": "^4.0.2"
   }
 }

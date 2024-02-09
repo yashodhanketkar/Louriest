@@ -6,6 +6,10 @@ require("dotenv").config();
 
 const token = process.env["Loutoken"];
 
+/**
+ * List of commands
+ * @type {string[]}
+ */
 const commands = [];
 // Grab all the command folders from the commands directory you created earlier
 const foldersPath = path.join(__dirname, "commands");

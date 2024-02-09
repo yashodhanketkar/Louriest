@@ -3,8 +3,16 @@ const path = require("node:path");
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 require("dotenv").config();
 
+/**
+ * Bot's unique token provided by discord developers portal
+ * @type {string}
+ */
 const token = process.env["Loutoken"];
 
+/**
+ * Main client instance
+ * @type {Client}
+ */
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
