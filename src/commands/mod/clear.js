@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { checkPermission } = require("../../common/checkPermissions");
 
 async function getMessages(channel, limit = 0) {
   const messages = await channel.messages.fetch();
   const messageId = messages.map((m) => m.id);
 
-  // return message Id all messages from channel
+  // return message Id of all messages from channel
   if (limit === 0) return messageId;
 
   /*
@@ -25,13 +26,30 @@ module.exports = {
     ),
   async execute(interaction) {
     const channel = await interaction.channel;
+
+    await interaction.deferReply({
+      ephemeral: true,
+    });
+
+    // checks for neccessary permissions to delete the message
+    const hasPermission = await checkPermission(interaction, "ManageMessages");
+
+    if (!hasPermission) {
+      await interaction.editReply({
+        content:
+          "Failed! You don't have neccessary permissions to perform this action.",
+        ephemeral: true,
+      });
+      return;
+    }
+
     const userLimit = interaction.options.getString("limit") ?? NaN;
     let content = "";
 
     /*
      * If user enters all, this command will delete all messages.
      * If user enters non-zero numeric value, this command will delete specified number of messages.
-     * If both of above conditions fails, this command won't delete any messages.
+     * If both of these conditions fails, this command won't delete any messages.
      */
     if (userLimit === "all") {
       await channel.bulkDelete(await getMessages(channel));
@@ -45,10 +63,6 @@ module.exports = {
         content = `No message has been deleted.\n"${userLimit}" is invalid input`;
       }
     }
-
-    await interaction.deferReply({
-      ephemeral: true,
-    });
 
     await require("node:timers/promises").setTimeout(200);
 
