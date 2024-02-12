@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  infractionCount Int
+  infractions     Infraction[]
+}
+
+model ProhibitedWord {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  value       String       @unique
+  infractions Infraction[]
+}
+
+model Infraction {
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  message          String
+  date             DateTime
+  prohibitedWord   ProhibitedWord @relation(fields: [prohibitedWordId], references: [id])
+  user             User           @relation(fields: [userId], references: [id])
+  prohibitedWordId String         @db.ObjectId
+  userId           String         @db.ObjectId
+}
