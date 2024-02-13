@@ -66,7 +66,7 @@ async function removeFromProhibitedWords(interaction) {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("allowword")
+    .setName("unbanword")
     .setDescription("Remove word from the prohibited wordlist.")
     .addStringOption((o) => o.setName("word").setDescription("Word to allow.")),
   execute: removeFromProhibitedWords,

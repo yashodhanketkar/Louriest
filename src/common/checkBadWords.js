@@ -1,5 +1,4 @@
 const { prisma } = require("../db/index.js");
-// const badWords = ["otaku", "idiot"];
 
 /**
  * Returns list of prohibited word from database
@@ -12,20 +11,32 @@ async function loadBadWords() {
 }
 
 /**
+ * Return type of checkBadWords function
+ * @typedef {Object} CheckBadWordsObject
+ *
+ * @property {boolean} haveBadWord - Indicates whether prohibited word is present
+ * @property {string} badWord - Return prohibited found or returns ""
+ */
+
+/**
  * Check whether message contains word from prohibited wordlist
  *
  * @param {string} word - word to check
  *
- * @returns {Promise<boolean>} returns true if message contains bad word
+ * @returns {Promise<CheckBadWordsObject>} returns true if message contains bad word
  */
 module.exports.checkBadWords = async function (word) {
   const badWords = await loadBadWords();
   let haveBadWord = false;
+  let badWordValue = "";
   for (let badWord of badWords) {
     if (word.includes(badWord)) {
+      badWordValue = badWord;
       haveBadWord = true;
     }
   }
 
-  return haveBadWord;
+  return { haveBadWord, badWord: badWordValue };
 };
+
+module.exports.loadBadWords = loadBadWords;

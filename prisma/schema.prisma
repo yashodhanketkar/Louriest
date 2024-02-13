@@ -8,23 +8,27 @@ datasource db {
 }
 
 model User {
-  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  discordId       String @unique
   infractionCount Int
-  infractions     Infraction[]
 }
 
 model ProhibitedWord {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  value       String       @unique
-  infractions Infraction[]
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  value String @unique
 }
 
 model Infraction {
-  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
   message          String
   date             DateTime
-  prohibitedWord   ProhibitedWord @relation(fields: [prohibitedWordId], references: [id])
-  user             User           @relation(fields: [userId], references: [id])
-  prohibitedWordId String         @db.ObjectId
-  userId           String         @db.ObjectId
+  prohibitedWordId String
+  userId           String
+}
+
+model Bans {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  discordId String   @unique
+  reason    String
+  date      DateTime
 }

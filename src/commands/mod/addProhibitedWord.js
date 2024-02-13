@@ -22,7 +22,7 @@ async function addToProhibitedWords(interaction) {
     });
     return;
   }
-  const word = interaction.options.getString("input") ?? "";
+  const word = interaction.options.getString("word") ?? "";
   if (word === "") {
     await interaction.editReply({
       content: "Please provide some input",
