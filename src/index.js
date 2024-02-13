@@ -13,8 +13,13 @@ const token = process.env["Loutoken"];
  * Main client instance
  * @type {Client}
  */
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, "commands");
