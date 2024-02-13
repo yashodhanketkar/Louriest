@@ -1,4 +1,6 @@
 const { Events, BaseInteraction } = require("discord.js");
+const { logInteraction } = require("../common/logger");
+const logger = require("../common/logger");
 
 /**
  * Interface between users input and commands
@@ -17,6 +19,7 @@ async function executeInteraction(interaction) {
 
   try {
     await command.execute(interaction);
+    await logger.logInteraction(interaction);
   } catch (error) {
     console.error(error);
     if (interaction.replied || interaction.deferred) {

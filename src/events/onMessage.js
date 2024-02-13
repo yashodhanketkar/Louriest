@@ -1,6 +1,8 @@
 const { addInfraction } = require("../common/handleBadWordEvent");
 const { checkBadWords } = require("../common/checkBadWords");
 const { Events, Message } = require("discord.js");
+const { logMessage } = require("../common/logger");
+const logger = require("../common/logger");
 
 /**
  * Checks message from users
@@ -21,6 +23,7 @@ async function executeOnMessage(message) {
       `Warning: ${message.author.displayName} - Use of this word is prohibited`
     );
 
+    await logger.logMessage(message, "Use of prohibited word");
     await message.delete();
   }
 }
