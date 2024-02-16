@@ -1,5 +1,4 @@
-const { BaseInteraction } = require("discord.js");
-const { SlashCommandBuilder } = require("discord.js");
+const { BaseInteraction, SlashCommandBuilder } = require("discord.js");
 const { RandomGenerator } = require("../../common/getRandom.js");
 
 /**

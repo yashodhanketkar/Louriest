@@ -106,6 +106,67 @@ class UserManager {
 
     return String(infractions.id);
   }
+
+  /**
+   * Removes latest infraction from the infraction list.
+   * Reduces infractionCount by 1.
+   *
+   * @param {Message} userId - The users id.
+   * @returns {Promise<boolean>} return whether was operation successful
+   */
+  async removeInfraction(userId) {
+    const user = await prisma.user.findUnique({ where: { discordId: userId } });
+
+    if (!user || user.infractionCount <= 0) return false;
+
+    try {
+      const latestInfraction = await prisma.infraction.findFirst({
+        where: { userId: user.id },
+        orderBy: { date: "desc" },
+      });
+
+      await prisma.infraction.delete({ where: { id: latestInfraction.id } });
+      await prisma.user.update({
+        where: { discordId: userId },
+        data: { infractionCount: { decrement: 1 } },
+      });
+
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  /**
+   * Reset infractions.
+   * Delete all infractions and set infractionCount to 0.
+   *
+   * @param {string} userId - The users id.
+   */
+  async resetInfractions(userId) {
+    const user = await prisma.user.findUnique({ where: { discordId: userId } });
+
+    if (!user) return false;
+
+    try {
+      await prisma.infraction.deleteMany({
+        where: {
+          userId: user.id,
+        },
+      });
+
+      await prisma.user.update({
+        where: { discordId: userId },
+        data: { infractionCount: 0 },
+      });
+
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
 }
 
 module.exports = new UserManager();
