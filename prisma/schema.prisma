@@ -32,3 +32,16 @@ model Bans {
   reason    String
   date      DateTime
 }
+
+model Log {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  type   LogType
+  name   String
+  userId String
+  date   DateTime
+}
+
+enum LogType {
+  INTERACTION
+  MESSAGE
+}
