@@ -3,7 +3,7 @@ const {
   TextBasedChannel,
   BaseInteraction,
 } = require("discord.js");
-const { checkPermission } = require("../../common/checkPermissions");
+const { checkPermission } = require("../../common/checks.js");
 const { setTimeout } = require("node:timers/promises");
 
 /**
@@ -92,7 +92,10 @@ module.exports = {
     .setName("clear")
     .setDescription("Multi dev command for development/testing")
     .addStringOption((o) =>
-      o.setName("limit").setDescription("Number of messages to delete.")
+      o
+        .setName("limit")
+        .setDescription("Number of messages to delete.")
+        .addChoices({ value: "all", name: "all" })
     ),
   execute: clearMessages,
 };

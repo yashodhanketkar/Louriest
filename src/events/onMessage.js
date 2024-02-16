@@ -1,16 +1,15 @@
-const { addInfraction } = require("../common/handleBadWordEvent");
-const { checkBadWords } = require("../common/checkBadWords");
-const { Events, Message } = require("discord.js");
-const { logMessage } = require("../common/logger");
 const logger = require("../common/logger");
+const { Events, Message } = require("discord.js");
+const { checkBadWords } = require("../common/prohibitedWords");
+const { addInfraction } = require("../common/user");
 
 /**
- * Checks message from users
- * If message contains prohibited word
- *   - message will be deleted
- *   - user will get a warning
+ * Executes actions on received messages from users.
+ * If the message contains a prohibited word:
+ *   - The message will be deleted.
+ *   - The user will receive a warning.
  *
- * @param {Message} message - message from user
+ * @param {Message} message - The message from the user.
  */
 async function executeOnMessage(message) {
   if (message.author.bot) return;
