@@ -17,15 +17,24 @@ class UserManager {
   async ban(guild, reason, userId) {
     let banInformation = "";
 
-    guild.bans
+    await guild.bans
       .create(userId, { reason })
       .then((banInfo) => {
         banInformation = `Banned ${
           banInfo.user?.tag ?? banInfo.tag ?? banInfo
         }`;
-        console.log(banInformation);
       })
       .catch(console.error);
+
+    const admins = (await guild.members.fetch()).filter((member) =>
+      member.permissions.has("Administrator")
+    );
+
+    for (let admin of admins) {
+      const user = admin[1];
+      if (user.user.bot) continue;
+      await user.send(banInformation);
+    }
 
     return banInformation;
   }

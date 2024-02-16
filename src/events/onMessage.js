@@ -1,7 +1,7 @@
 const logger = require("../common/logger");
 const { Events, Message } = require("discord.js");
 const { checkBadWords } = require("../common/prohibitedWords");
-const { addInfraction } = require("../common/user");
+const UserManager = require("../common/user");
 
 /**
  * Executes actions on received messages from users.
@@ -17,7 +17,7 @@ async function executeOnMessage(message) {
   const badWord = await checkBadWords(message.content);
 
   if (badWord.haveBadWord) {
-    await addInfraction(message, badWord.badWord);
+    await UserManager.addInfraction(message, badWord.badWord);
     await message.reply(
       `Warning: ${message.author.displayName} - Use of this word is prohibited`
     );
