@@ -1,3 +1,4 @@
+const { BaseInteraction } = require("discord.js");
 const { prisma } = require("../db");
 const { checkPermission } = require("./checks");
 const { setTimeout } = require("node:timers/promises");
@@ -48,7 +49,7 @@ class ProhibitedWords {
         where: {
           value: word,
         },
-      })
+      }),
     );
     if (wordIsPresent) {
       await interaction.editReply({
@@ -106,7 +107,7 @@ class ProhibitedWords {
         where: {
           value: word,
         },
-      })
+      }),
     );
 
     if (wordIsPresent) {

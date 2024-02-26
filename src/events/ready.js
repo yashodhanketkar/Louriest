@@ -1,3 +1,4 @@
+const { Client } = require("discord.js");
 const { Events } = require("discord.js");
 
 /**

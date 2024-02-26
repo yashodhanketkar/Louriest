@@ -1,3 +1,5 @@
+const { InteractionType } = require("discord.js");
+
 class Checks {
   /**
    * Check if a member has the specified permissions for a given interaction.

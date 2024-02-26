@@ -1,5 +1,5 @@
 const logger = require("../common/logger");
-const { Events, Message, RoleFlags } = require("discord.js");
+const { Events, Message } = require("discord.js");
 const { checkBadWords } = require("../common/prohibitedWords");
 const UserManager = require("../common/user");
 
@@ -15,7 +15,7 @@ async function handleProhibitedWord(message, badWord) {
 
   await UserManager.addInfraction(message, badWord, isAdmin);
   await message.reply(
-    `Warning: ${message.author.displayName} - Use of this word is prohibited`
+    `Warning: ${message.author.displayName} - Use of this word is prohibited`,
   );
 
   await logger.logMessage(message, "Use of prohibited word");

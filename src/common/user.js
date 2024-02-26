@@ -8,8 +8,8 @@ class UserManager {
   /**
    * Bans the user from guild.
    *
-   * @param{Guild} guild - The discords guild object.
-   * @param{string} reason - The reason for the ban.
+   * @param {Guild} guild - The discords guild object.
+   * @param {string} reason - The reason for the ban.
    * @param {string} userId - The user's ID.
    *
    * @returns {Promise<string>} Generated ban information.
@@ -27,7 +27,7 @@ class UserManager {
       .catch(console.error);
 
     const admins = (await guild.members.fetch()).filter((member) =>
-      member.permissions.has("Administrator")
+      member.permissions.has("Administrator"),
     );
 
     for (let admin of admins) {

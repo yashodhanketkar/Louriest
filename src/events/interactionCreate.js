@@ -1,5 +1,4 @@
 const { Events, BaseInteraction } = require("discord.js");
-const { logInteraction } = require("../common/logger");
 const logger = require("../common/logger");
 
 /**
